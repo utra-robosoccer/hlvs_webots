@@ -48,7 +48,7 @@ class Team(SimpleNamespace):
                 robot_model = os.environ.get("ROBOT_MODEL", "bez1")
                 for i in range(5):
                     if robot_model != "bez1" and str(i) in team['players']:
-                        team['players'][str(i)]['proto'] = robot_model.capitalize()
+                        team['players'][str(i)]['proto'] = robot_model.capitalize()+"Robocup"
 
                 count = 1
                 for p_key, p in team['players'].items():
