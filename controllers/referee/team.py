@@ -89,3 +89,4 @@ class Team(SimpleNamespace):
             player['velocity_buffer'] = [[0] * 6] * window_size
             player['ball_handling_start'] = None
             player['ball_handling_last'] = None
+            player['node_names'] = {} # used for caching node_id -> name pairs of a robot for contact point analysis
