@@ -22,6 +22,7 @@ WorldInfo {
   ]
   title "Robocup V-HL Kid"
   basicTimeStep 8
+  FPS 20
   physicsDisableTime 0.1
   physicsDisableLinearThreshold 0.1
   physicsDisableAngularThreshold 0.1
