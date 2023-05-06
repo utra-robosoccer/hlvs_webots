@@ -875,13 +875,14 @@ HingeJointWithBacklash {
           ]
           name "Hip_Printable_v2_v10_2"
           boundingObject Transform {
-            translation -0.000000 0.000000 -0.022500
+            translation -0.000000 0.000000 -0.01
             rotation 0.577350 0.577350 0.577350 2.094395
             children [
               Box {
-                 size 0.026000 0.045000 0.050000
+                 size 0.026000 0.017000 0.050000
               }
             ]
+
           }
           physics Physics {
             density -1
@@ -1355,11 +1356,11 @@ HingeJointWithBacklash {
           ]
           name "Hip_Printable_v2_v10_1"
           boundingObject Transform {
-            translation -0.000000 -0.000000 -0.022500
+            translation -0.000000 -0.000000 -0.01
             rotation 0.577350 0.577350 0.577350 2.094395
             children [
               Box {
-                 size 0.026000 0.045000 0.050000
+                 size 0.026000 0.017000 0.050000
               }
             ]
           }
