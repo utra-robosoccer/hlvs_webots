@@ -6,6 +6,7 @@ controllers/referee/recording.html
 controllers/referee/recording.x3d
 controllers/referee/recording.json
 controllers/referee/textures/*
+worlds/*.wbproj
 .idea/*
 # Python compiled files
 __pycache__/

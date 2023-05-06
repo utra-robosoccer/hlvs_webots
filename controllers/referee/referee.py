@@ -16,6 +16,8 @@
 import copy
 import json
 import math
+import signal
+
 import numpy as np
 import os
 import random
@@ -27,6 +29,7 @@ import traceback
 import yaml
 
 from scipy.spatial import ConvexHull
+from scipy.spatial.transform import Rotation as R
 
 from types import SimpleNamespace
 
@@ -65,12 +68,13 @@ class Referee:
             config = yaml.safe_load(f)
         self.config = SimpleNamespace(**config)
         self.config.GOAL_HALF_WIDTH = self.config.GOAL_WIDTH / 2
+        self.UPDATE_GAME_STATUS_RATE = 10
         self.config.SIMULATED_TIME_INTERRUPTION_PHASE_0 = \
-            int(self.config.SIMULATED_TIME_INTERRUPTION_PHASE_0 * 1000 / self.time_step)
+            int(self.config.SIMULATED_TIME_INTERRUPTION_PHASE_0 * 1000 / self.time_step / self.UPDATE_GAME_STATUS_RATE)
         self.config.SIMULATED_TIME_BEFORE_PLAY_STATE = \
-            int(self.config.SIMULATED_TIME_BEFORE_PLAY_STATE * 1000 / self.time_step)
+            int(self.config.SIMULATED_TIME_BEFORE_PLAY_STATE * 1000 / self.time_step / self.UPDATE_GAME_STATUS_RATE)
         self.config.SIMULATED_TIME_SET_PENALTY_SHOOTOUT = \
-            int(self.config.SIMULATED_TIME_SET_PENALTY_SHOOTOUT * 1000 / self.time_step)
+            int(self.config.SIMULATED_TIME_SET_PENALTY_SHOOTOUT * 1000 / self.time_step / self.UPDATE_GAME_STATUS_RATE)
 
         self.game_controller_socket = None
 
@@ -161,6 +165,17 @@ class Referee:
         if hasattr(self.game, "udp_bouncer_process") and self.udp_bouncer_process:
             self.logger.info("Terminating 'udp_bouncer' process")
             self.udp_bouncer_process.terminate()
+        if hasattr(self.game, 'record_simulation'):
+            if self.game.record_simulation.endswith(".html"):
+                self.logger.info("Stopping Animation recording")
+                self.supervisor.animationStopRecording()
+                self.logger.info("Stopped animation recording")
+            elif self.game.record_simulation.endswith(".mp4"):
+                self.logger.info("Starting encoding")
+                self.supervisor.movieStopRecording()
+                while not self.supervisor.movieIsReady():
+                    self.supervisor.step(self.time_step)
+                self.logger.info("Encoding finished")
         if hasattr(self.game, 'over') and self.game.over:
             self.logger.info("Game is over")
             if hasattr(self.game, 'press_a_key_to_terminate') and self.game.press_a_key_to_terminate:
@@ -171,22 +186,12 @@ class Referee:
                     if keyboard.getKey() != -1:
                         break
             else:
-                waiting_steps = self.config.END_OF_GAME_TIMEOUT * 1000 / self.time_step
+                waiting_steps = self.config.END_OF_GAME_TIMEOUT * 1000 / self.time_step / self.UPDATE_GAME_STATUS_RATE
                 self.logger.info(f"Waiting {waiting_steps} simulation steps before exiting")
                 while waiting_steps > 0:
                     self.supervisor.step(self.time_step)
                     waiting_steps -= 1
                 self.logger.info("Finished waiting")
-        if hasattr(self.game, 'record_simulation'):
-            if self.game.record_simulation.endswith(".html"):
-                self.logger.info("Stopping animation recording")
-                self.supervisor.animationStopRecording()
-            elif self.game.record_simulation.endswith(".mp4"):
-                self.logger.info("Starting encoding")
-                self.supervisor.movieStopRecording()
-                while not self.supervisor.movieIsReady():
-                    self.supervisor.step(self.time_step)
-                self.logger.info("Encoding finished")
         self.logger.info("Exiting webots properly")
 
         # Note: If self.supervisor.step is not called before the 'simulationQuit', information is not shown
@@ -2092,6 +2097,7 @@ class Referee:
         if hasattr(self.game, 'record_simulation'):
             try:
                 if self.game.record_simulation.endswith(".html"):
+                    self.logger.info("Start animation Recording")
                     self.supervisor.animationStartRecording(self.game.record_simulation)
                 elif self.game.record_simulation.endswith(".mp4"):
                     self.supervisor.movieStartRecording(self.game.record_simulation, width=1280, height=720, codec=0,
@@ -2104,18 +2110,51 @@ class Referee:
                 self.logger.error(f"Failed to start recording with exception: {traceback.format_exc()}")
                 self.clean_exit()
 
+    def sigint(self, *args):
+        self.logger.warning("Sigint signal called")
+        self.clean_exit()
+
     def main_loop(self):
         previous_real_time = time.time()
-        while self.supervisor.step(self.time_step) != -1 and not self.game.over:
+        i = 0
+        signal.signal(signal.SIGINT, self.sigint)
+        signal.signal(signal.SIGTERM, self.sigint)
+        while not self.game.over:
+            supervisor_step = self.supervisor.step(self.time_step)
+            if supervisor_step == -1:
+                self.game.over = True
+                break
+
             if hasattr(self.game, 'max_duration') and (time.time() - self.blackboard.start_real_time) > self.game.max_duration:
                 self.logger.info(f'Interrupting game automatically after {self.game.max_duration} seconds')
                 break
             self.print_status()
             self.game_controller_send(f'CLOCK:{self.sim_time.get_ms()}')
-            self.game_controller_receive()
-            if self.game.state is None:
+            i = i + 1
+            if i % self.UPDATE_GAME_STATUS_RATE != 0: # Send Game Controller status
                 self.sim_time.progress_ms(self.time_step)
                 continue
+
+            if os.getenv("START_PLAY", "false") == "true" and i == 20:
+                print(f"Setting starting state: {os.getenv('STARTING_STATE')}")
+                self.game_controller_send("STATE:READY")
+                self.game_controller_send("STATE:SET")
+                self.game_controller_send("STATE:PLAY")
+                if os.getenv("ROBOT_X") is not None:
+                    p = [float(os.getenv("ROBOT_X")), float(os.getenv("ROBOT_Y")), float(os.getenv("ROBOT_Z"))]
+                    r = R.from_euler("ZYX", [os.getenv("ROBOT_THETA"), 0, 0], degrees=False)
+                    q = r.as_quat().tolist()
+                    qq = [q[3], q[0], q[1], q[2]]
+                    print("Resetting Robot Position")
+                    print(p)
+                    print(qq)
+                    self.reset_player("red", "1", None, custom_t=p, custom_r=qq)
+                if os.getenv("BALL_X") is not None:
+                    p = [float(os.getenv("BALL_X")), float(os.getenv("BALL_Y")), 0.0772]
+                    self.game_interruption_place_ball(p)
+
+
+            self.game_controller_receive()
             self.stabilize_robots()
             send_play_state_after_penalties = False
             previous_position = copy.deepcopy(self.game.ball_position)
@@ -2577,7 +2616,7 @@ class Referee:
                                 else:
                                     self.logger.info('Tossing a coin to determine the winner.')
                                     if bool(random.getrandbits(1)):
-                                        self.logger.info('The winer is the red team.')
+                                        self.logger.info('The winner is the red team.')
                                     else:
                                         self.logger.info('The winer is the blue team.')
 
