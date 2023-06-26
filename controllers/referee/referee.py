@@ -17,6 +17,7 @@ import copy
 import json
 import math
 import signal
+import threading
 
 import numpy as np
 import os
@@ -2113,8 +2114,9 @@ class Referee:
     def main_loop(self):
         previous_real_time = time.time()
         i = 0
-        signal.signal(signal.SIGINT, self.sigint)
-        signal.signal(signal.SIGTERM, self.sigint)
+        if threading.current_thread() is threading.main_thread():
+            signal.signal(signal.SIGINT, self.sigint)
+            signal.signal(signal.SIGTERM, self.sigint)
         while not self.game.over:
             supervisor_step = self.supervisor.step(self.time_step)
             if supervisor_step == -1:
