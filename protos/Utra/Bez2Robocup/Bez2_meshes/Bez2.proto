@@ -36,8 +36,8 @@ PROTO Bez2 [
     local xm430_resolution = 0.00153
 
     local xc430_backlash = 0.01
-    local xc430_max_torque = 1.9
-    local xc430_max_velocity = 7.33
+    local xc430_max_torque = 1.5
+    local xc430_max_velocity = 6.38
     local xc430_damping_constant = 0.159155
     local xc430_static_friction = 0.80667
     local xc430_resolution = 0.00153
@@ -111,21 +111,21 @@ HingeJointWithBacklash {
         jointParameters HingeJointParameters {
           axis -0.000000 -1.000000 0.000000
           anchor 0.000000 0.072500 0.000450
-      dampingConstant %{= xc430_damping_constant }%
-     staticFriction %{= xc430_static_friction }%
+      dampingConstant %{= xm430_damping_constant }%
+     staticFriction %{= xm430_static_friction }%
 }
- backlash %{= xc430_backlash }%
+ backlash %{= xm430_backlash }%
         device [
           RotationalMotor {
             name "left_arm_motor_0 [shoulder]"
-      maxVelocity %{= xc430_max_velocity }%
-     maxTorque %{= xc430_max_torque }%
+      maxVelocity %{= xm430_max_velocity }%
+     maxTorque %{= xm430_max_torque }%
         minPosition -1.57079632679
       maxPosition 3.92699081699
           }
           PositionSensor {
             name "left_arm_motor_0_sensor"
-     resolution %{= xc430_resolution }%
+     resolution %{= xm430_resolution }%
 }
         ]
         endPoint Solid {
@@ -150,21 +150,21 @@ HingeJointWithBacklash {
               jointParameters HingeJointParameters {
                 axis 0.000000 -1.000000 0.000000
                 anchor 0.000000 0.008000 -0.090600
-      dampingConstant %{= xc430_damping_constant }%
-     staticFriction %{= xc430_static_friction }%
+      dampingConstant %{= xm430_damping_constant }%
+     staticFriction %{= xm430_static_friction }%
 }
- backlash %{= xc430_backlash }%
+ backlash %{= xm430_backlash }%
               device [
                 RotationalMotor {
                   name "left_arm_motor_1"
-      maxVelocity %{= xc430_max_velocity }%
-     maxTorque %{= xc430_max_torque }%
+      maxVelocity %{= xm430_max_velocity }%
+     maxTorque %{= xm430_max_torque }%
         minPosition 0
       maxPosition 3.14159265359
                 }
                 PositionSensor {
                   name "left_arm_motor_1_sensor"
-     resolution %{= xc430_resolution }%
+     resolution %{= xm430_resolution }%
 }
               ]
               endPoint Solid {
@@ -186,7 +186,7 @@ HingeJointWithBacklash {
                     ]
                   }
                   Solid {
-                    translation -0.01 0.025 -0.18
+                    translation -0.01 0.025 -0.205
                     rotation 0.000000 1.000000 0.000000 0.000000
                     name "left_hand [hand]"
                     children [
@@ -224,7 +224,7 @@ HingeJointWithBacklash {
                   rotation 0.000000 -1.000000 -0.000000 3.141593
                   children [
                     Box {
-                       size 0.04 0.04 0.150
+                       size 0.04 0.04 0.200
                     }
                   ]
                 }
@@ -265,21 +265,21 @@ HingeJointWithBacklash {
         jointParameters HingeJointParameters {
           axis 0.000000 -1.000000 0.000000
           anchor 0.000000 -0.072500 0.000450
-      dampingConstant %{= xc430_damping_constant }%
-     staticFriction %{= xc430_static_friction }%
+      dampingConstant %{= xm430_damping_constant }%
+     staticFriction %{= xm430_static_friction }%
 }
- backlash %{= xc430_backlash }%
+ backlash %{= xm430_backlash }%
         device [
           RotationalMotor {
             name "right_arm_motor_0 [shoulder]"
-      maxVelocity %{= xc430_max_velocity }%
-     maxTorque %{= xc430_max_torque }%
+      maxVelocity %{= xm430_max_velocity }%
+     maxTorque %{= xm430_max_torque }%
         minPosition -1.57079632679
       maxPosition 3.92699081699
           }
           PositionSensor {
             name "right_arm_motor_0_sensor"
-     resolution %{= xc430_resolution }%
+     resolution %{= xm430_resolution }%
 }
         ]
         endPoint Solid {
@@ -300,21 +300,21 @@ HingeJointWithBacklash {
               jointParameters HingeJointParameters {
                 axis -0.000000 -1.000000 0.000000
                 anchor -0.000000 -0.008000 -0.090600
-      dampingConstant %{= xc430_damping_constant }%
-     staticFriction %{= xc430_static_friction }%
+      dampingConstant %{= xm430_damping_constant }%
+     staticFriction %{= xm430_static_friction }%
 }
- backlash %{= xc430_backlash }%
+ backlash %{= xm430_backlash }%
               device [
                 RotationalMotor {
                   name "right_arm_motor_1"
-      maxVelocity %{= xc430_max_velocity }%
-     maxTorque %{= xc430_max_torque }%
+      maxVelocity %{= xm430_max_velocity }%
+     maxTorque %{= xm430_max_torque }%
         minPosition 0
       maxPosition 3.14159265359
                 }
                 PositionSensor {
                   name "right_arm_motor_1_sensor"
-     resolution %{= xc430_resolution }%
+     resolution %{= xm430_resolution }%
 }
               ]
               endPoint Solid {
@@ -332,7 +332,7 @@ HingeJointWithBacklash {
                     ]
                   }
                   Solid {
-                    translation -0.01 -0.025 -0.18
+                    translation -0.01 -0.025 -0.205
                     rotation 0.000000 1.000000 0.000000 0.000000
                     name "right_hand [hand]"
                     children [
@@ -370,7 +370,7 @@ HingeJointWithBacklash {
                   rotation 0.000000 -1.000000 -0.000000 3.141593
                   children [
                     Box {
-                       size 0.04 0.04 0.150
+                       size 0.04 0.04 0.200
                     }
                   ]
                 }
