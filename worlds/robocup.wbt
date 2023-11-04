@@ -1,7 +1,6 @@
 #VRML_SIM R2022b utf8
 
 IMPORTABLE EXTERNPROTO "../protos/RoboCupBackground.proto"
-#IMPORTABLE EXTERNPROTO "../protos/RobocupGoal.proto"
 IMPORTABLE EXTERNPROTO "../protos/RobocupSoccerField.proto"
 IMPORTABLE EXTERNPROTO "../protos/RobocupTexturedSoccerBall.proto"
 IMPORTABLE EXTERNPROTO "../protos/lighting/RoboCupMainLight.proto"
@@ -15,6 +14,12 @@ IMPORTABLE EXTERNPROTO "../protos/Utra/BezRobocup/Soccerbot_meshes/SimpleBez1.pr
 IMPORTABLE EXTERNPROTO "../protos/Utra/Bez2Robocup/Bez2Robocup.proto"
 IMPORTABLE EXTERNPROTO "../protos/BridgeGroundTruth.proto"
 
+IMPORTABLE EXTERNPROTO "../protos/robots/bitbots/WolfgangRobocup/WolfgangRobocup.proto"
+IMPORTABLE EXTERNPROTO "../protos/robots/itandroids/Chape/ChapeRobocup.proto"
+IMPORTABLE EXTERNPROTO "../protos/robots/nubots/NUgus/NUgus.proto"
+IMPORTABLE EXTERNPROTO "../protos/robots/utra/BezRobocup/BezRobocup.proto"
+# IMPORTABLE EXTERNPROTO "../protos/robots/utra/Bez2Robocup/Bez2Robocup.proto"
+
 WorldInfo {
   info [
     "Description: official soccer simulation for the 2021 Robocup Virtual Humanoid League (kid size)"
@@ -22,7 +27,6 @@ WorldInfo {
   ]
   title "Robocup V-HL Kid"
   basicTimeStep 8
-  FPS 20
   physicsDisableTime 0.1
   physicsDisableLinearThreshold 0.1
   physicsDisableAngularThreshold 0.1
