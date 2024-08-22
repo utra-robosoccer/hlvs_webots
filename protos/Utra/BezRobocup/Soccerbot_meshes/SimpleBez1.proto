@@ -102,14 +102,14 @@ PROTO SimpleBez1 [
         }
         device [
           RotationalMotor {
-            name "left_arm_motor_0 [shoulder]"
+            name "left_shoulder_pitch [shoulder]"
             maxVelocity %{= mx28_max_velocity }%
             minPosition -1.57079632679
             maxPosition 3.92699081699
             maxTorque %{= mx28_max_torque }%
           }
           PositionSensor {
-            name "left_arm_motor_0_sensor"
+            name "left_shoulder_pitch_sensor"
             resolution %{= mx28_resolution }%
           }
         ]
@@ -142,13 +142,13 @@ PROTO SimpleBez1 [
               }
               device [
                 RotationalMotor {
-                  name "left_arm_motor_1"
+                  name "left_elbow"
                   maxVelocity %{= mx28_max_velocity }%
                   maxPosition 3.14159265359
                   maxTorque %{= mx28_max_torque }%
                 }
                 PositionSensor {
-                  name "left_arm_motor_1_sensor"
+                  name "left_elbow_sensor"
                   resolution %{= mx28_resolution }%
                 }
               ]
@@ -257,14 +257,14 @@ PROTO SimpleBez1 [
         }
         device [
           RotationalMotor {
-            name "right_arm_motor_0 [shoulder]"
+            name "right_shoulder_pitch [shoulder]"
             maxVelocity %{= mx28_max_velocity }%
             minPosition -1.57079632679
             maxPosition 3.92699081699
             maxTorque %{= mx28_max_torque }%
           }
           PositionSensor {
-            name "right_arm_motor_0_sensor"
+            name "right_shoulder_pitch_sensor"
             resolution %{= mx28_resolution }%
           }
         ]
@@ -297,13 +297,13 @@ PROTO SimpleBez1 [
               }
               device [
                 RotationalMotor {
-                  name "right_arm_motor_1"
+                  name "right_elbow"
                   maxVelocity %{= mx28_max_velocity }%
                   maxPosition 3.14159265359
                   maxTorque %{= mx28_max_torque }%
                 }
                 PositionSensor {
-                  name "right_arm_motor_1_sensor"
+                  name "right_elbow_sensor"
                   resolution %{= mx28_resolution }%
                 }
               ]
@@ -413,14 +413,14 @@ PROTO SimpleBez1 [
         backlash %{= mx28_backlash }%
         device [
           RotationalMotor {
-            name "left_leg_motor_0"
+            name "left_hip_yaw"
             maxVelocity %{= mx28_max_velocity }%
             minPosition -1.309
             maxPosition 0.524
             maxTorque %{= mx28_max_torque }%
           }
           PositionSensor {
-            name "left_leg_motor_0_sensor"
+            name "left_hip_yaw_sensor"
             resolution %{= mx28_resolution }%
           }
         ]
@@ -454,14 +454,14 @@ PROTO SimpleBez1 [
               backlash %{= mx28_backlash }%
               device [
                 RotationalMotor {
-                  name "left_leg_motor_1 [hip]"
+                  name "left_hip_roll [hip]"
                   maxVelocity %{= mx28_max_velocity }%
                   minPosition -0.785398163397
                   maxPosition 1.57079632679
                   maxTorque %{= mx28_max_torque }%
                 }
                 PositionSensor {
-                  name "left_leg_motor_1_sensor"
+                  name "left_hip_roll_sensor"
                   resolution %{= mx28_resolution }%
                 }
               ]
@@ -496,14 +496,14 @@ PROTO SimpleBez1 [
                     backlash %{= mx28_backlash }%
                     device [
                       RotationalMotor {
-                        name "left_leg_motor_2"
+                        name "left_hip_pitch"
                         maxVelocity %{= mx28_max_velocity }%
                         minPosition -0.785398163397
                         maxPosition 2.35619449019
                         maxTorque %{= mx28_max_torque }%
                       }
                       PositionSensor {
-                        name "left_leg_motor_2_sensor"
+                        name "left_hip_pitch_sensor"
                         resolution %{= mx28_resolution }%
                       }
                     ]
@@ -537,13 +537,13 @@ PROTO SimpleBez1 [
                           backlash %{= mx28_backlash }%
                           device [
                             RotationalMotor {
-                              name "left_leg_motor_3"
+                              name "left_knee"
                               maxVelocity %{= mx28_max_velocity }%
                               minPosition -2.793
                               maxTorque %{= mx28_max_torque }%
                             }
                             PositionSensor {
-                              name "left_leg_motor_3_sensor"
+                              name "left_knee_sensor"
                               resolution %{= mx28_resolution }%
                             }
                           ]
@@ -577,14 +577,14 @@ PROTO SimpleBez1 [
                                 backlash %{= mx28_backlash }%
                                 device [
                                   RotationalMotor {
-                                    name "left_leg_motor_4"
+                                    name "left_ankle_pitch"
                                     maxVelocity %{= mx28_max_velocity }%
                                     minPosition -0.785398163397
                                     maxPosition 1.57079632679
                                     maxTorque %{= mx28_max_torque }%
                                   }
                                   PositionSensor {
-                                    name "left_leg_motor_4_sensor"
+                                    name "left_ankle_pitch_sensor"
                                     resolution %{= mx28_resolution }%
                                   }
                                 ]
@@ -618,14 +618,14 @@ PROTO SimpleBez1 [
                                       backlash %{= mx28_backlash }%
                                       device [
                                         RotationalMotor {
-                                          name "left_leg_motor_5"
+                                          name "left_ankle_roll"
                                           maxVelocity %{= mx28_max_velocity }%
                                           minPosition -0.785398163397
                                           maxPosition 0.785398163397
                                           maxTorque %{= mx28_max_torque }%
                                         }
                                         PositionSensor {
-                                          name "left_leg_motor_5_sensor"
+                                          name "left_ankle_roll_sensor"
                                           resolution %{= mx28_resolution }%
                                         }
                                       ]
@@ -932,14 +932,14 @@ PROTO SimpleBez1 [
         backlash %{= mx28_backlash }%
         device [
           RotationalMotor {
-            name "right_leg_motor_0"
+            name "right_hip_yaw"
             maxVelocity %{= mx28_max_velocity }%
             minPosition -1.309
             maxPosition 0.524
             maxTorque %{= mx28_max_torque }%
           }
           PositionSensor {
-            name "right_leg_motor_0_sensor"
+            name "right_hip_yaw_sensor"
             resolution %{= mx28_resolution }%
           }
         ]
@@ -973,14 +973,14 @@ PROTO SimpleBez1 [
               backlash %{= mx28_backlash }%
               device [
                 RotationalMotor {
-                  name "right_leg_motor_1 [hip]"
+                  name "right_hip_roll [hip]"
                   maxVelocity %{= mx28_max_velocity }%
                   minPosition -0.785398163397
                   maxPosition 1.57079632679
                   maxTorque %{= mx28_max_torque }%
                 }
                 PositionSensor {
-                  name "right_leg_motor_1_sensor"
+                  name "right_hip_roll_sensor"
                   resolution %{= mx28_resolution }%
                 }
               ]
@@ -1014,14 +1014,14 @@ PROTO SimpleBez1 [
                     backlash %{= mx28_backlash }%
                     device [
                       RotationalMotor {
-                        name "right_leg_motor_2"
+                        name "right_hip_pitch"
                         maxVelocity %{= mx28_max_velocity }%
                         minPosition -0.785398163397
                         maxPosition 2.35619449019
                         maxTorque %{= mx28_max_torque }%
                       }
                       PositionSensor {
-                        name "right_leg_motor_2_sensor"
+                        name "right_hip_pitch_sensor"
                         resolution %{= mx28_resolution }%
                       }
                     ]
@@ -1055,13 +1055,13 @@ PROTO SimpleBez1 [
                           backlash %{= mx28_backlash }%
                           device [
                             RotationalMotor {
-                              name "right_leg_motor_3"
+                              name "right_knee"
                               maxVelocity %{= mx28_max_velocity }%
                               minPosition -2.793
                               maxTorque %{= mx28_max_torque }%
                             }
                             PositionSensor {
-                              name "right_leg_motor_3_sensor"
+                              name "right_knee_sensor"
                               resolution %{= mx28_resolution }%
                             }
                           ]
@@ -1095,14 +1095,14 @@ PROTO SimpleBez1 [
                                 backlash %{= mx28_backlash }%
                                 device [
                                   RotationalMotor {
-                                    name "right_leg_motor_4"
+                                    name "right_ankle_pitch"
                                     maxVelocity %{= mx28_max_velocity }%
                                     minPosition -0.785398163397
                                     maxPosition 1.57079632679
                                     maxTorque %{= mx28_max_torque }%
                                   }
                                   PositionSensor {
-                                    name "right_leg_motor_4_sensor"
+                                    name "right_ankle_pitch_sensor"
                                     resolution %{= mx28_resolution }%
                                   }
                                 ]
@@ -1136,14 +1136,14 @@ PROTO SimpleBez1 [
                                       backlash %{= mx28_backlash }%
                                       device [
                                         RotationalMotor {
-                                          name "right_leg_motor_5"
+                                          name "right_ankle_roll"
                                           maxVelocity %{= mx28_max_velocity }%
                                           minPosition -0.785398163397
                                           maxPosition 0.785398163397
                                           maxTorque %{= mx28_max_torque }%
                                         }
                                         PositionSensor {
-                                          name "right_leg_motor_5_sensor"
+                                          name "right_ankle_roll_sensor"
                                           resolution %{= mx28_resolution }%
                                         }
                                       ]
@@ -1448,14 +1448,14 @@ PROTO SimpleBez1 [
         }
         device [
           RotationalMotor {
-            name "head_motor_0"
+            name "head_yaw"
             maxVelocity %{= mx28_max_velocity }%
             minPosition -1.57079632679
             maxPosition 1.57079632679
             maxTorque %{= mx28_max_torque }%
           }
           PositionSensor {
-            name "head_motor_0_sensor"
+            name "head_yaw_sensor"
             resolution %{= mx28_resolution }%
           }
         ]
@@ -1488,14 +1488,14 @@ PROTO SimpleBez1 [
               }
               device [
                 RotationalMotor {
-                  name "head_motor_1"
+                  name "head_pitch"
                   maxVelocity %{= mx28_max_velocity }%
                   minPosition -2.35619449019
                   maxPosition 2.35619449019
                   maxTorque %{= mx28_max_torque }%
                 }
                 PositionSensor {
-                  name "head_motor_1_sensor"
+                  name "head_pitch_sensor"
                   resolution %{= mx28_resolution }%
                 }
               ]
